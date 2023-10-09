@@ -4,6 +4,74 @@
     <meta charset="UTF-8">
     <link rel = "stylesheet" href = "css/master.css">
     <title>Exchange</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="components/detail-panel.js"></script>
+    <script src="components/portfolio.js"></script>
 
 </head>
+
+<body>
+
+    <div ng-app="mockExchange" ng-controller="mainController as ctrl" class="background">
+        <h1>Exchange</h1>
+
+        <table class="big-grid">
+            <colgroup>
+                <col width="50%">
+                <col width="50%">
+            </colgroup>
+
+        <tr>
+            <!-- NW cell ----------------------------------------------- -->
+
+            <td class="nw-cell">
+                <p class="centered">Enter symbol or name (partial okay):</p>
+                <form name="search-form">
+                    <div class="centered">
+                        <input type="text" size="40" name="partialMatch" ng-model="partialMatch" ng-change="onPartialMatchChange()" required>
+                    </div>
+                </form>
+
+                <div class="stock-listing">
+                    <table class="centered">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="80%">
+                        </colgroup>
+
+                        <tr ng-repeat="stock in matchingStocks">
+                            <td class="right-aligned"><a href="#" ng-click="onStockSelected( { symbol: stock.symbol, fullName: stock.fullName } )">{{ stock.symbol }}</a></td>
+                            <td class="left-aligned">{{ stock.fullName }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+
+            <!-- NE cell ----------------------------------------------- -->
+
+            <td class="ne-cell centered">
+                <detail-panel stock-to-show="stockSelected" buy-callback="onStockPurchase"></detail-panel>
+            </td>
+        </tr>
+
+        <!-- =========================================================== -->
+
+        <tr>
+
+            <!-- S cell ----------------------------------------------- -->
+
+            <td colspan="2" class="s-cell centered">
+                <portfolio portfolio-to-show="portfolio" sell-callback="onStockSold" stock-select-callback="onStockSelected"></portfolio>
+            </td>
+
+        </tr>
+
+        </table>
+
+    </div>
+
+
+</body>
+
+</html>
