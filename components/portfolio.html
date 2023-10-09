@@ -1,0 +1,44 @@
+<div class="portfolio">
+    <h2>Portfolio</h2>
+    <!-- <p>Your stocks will be listed here and updated constantly.</p> -->
+    <p>There are {{ $ctrl.portfolioToShow.length }} line items in the portolio.</p>
+
+    <table ng-if="$ctrl.portfolioToShow.length > 0">
+        <colgroup>
+            <col width="14%">
+            <col width="13%">
+            <col width="17%">
+            <col width="17%">
+            <col width="18%">
+            <col width="17%">
+            <col width="4%">
+        </colgroup>
+
+        <thead>
+            <tr>
+                <th class="centered">Symbol</th>
+                <th class="right-aligned">Shares</th>
+                <th class="right-aligned">Cost/Share</th>
+                <th class="right-aligned">Market Price</th>
+                <th class="right-aligned">Market Value</th>
+                <th class="right-aligned">Net Change</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="holding in $ctrl.portfolioToShow">
+                <td class="centered"><a href="#" ng-click="$ctrl.stockSelectCallback({ 'symbol' : holding.stock.symbol, 'fullName' : holding.stock.fullName })">
+                    {{ holding.stock.symbol }}</a>
+                </td>
+                <td class="right-aligned">{{ holding.numShare | number }}</td>
+                <td class="right-aligned">{{ holding.costPerShare | currency }}</td>
+                <td class="right-aligned">{{ holding.marketPrice | currency }}</td>
+                <td class="right-aligned">{{ holding.marketValue | currency }}</td>
+                <td ng-if="holding.netChange < 0" class="red-flag right-aligned">{{ holding.netChange | currency }}</td>
+                <td ng-if="holding.netChange >= 0" class="green-flag right-aligned">{{ holding.netChange | currency }}</td>
+                <td><button type="button" ng-click="$ctrl.sellCallback($index)">Sell</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

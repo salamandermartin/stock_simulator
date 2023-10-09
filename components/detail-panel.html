@@ -1,0 +1,16 @@
+<div ng-if="$ctrl.stockToShow != undefined">
+    <h2>Stock Information</h2>
+    <h3>{{ $ctrl.stockToShow.symbol }}: {{ $ctrl.stockToShow.fullName }}</h3>
+    <form name="buy-form">
+        <p>Market price (per share):
+            <span ng-if="$ctrl.marketPrice != undefined">{{ $ctrl.marketPrice | currency }}</span>
+            <span ng-if="$ctrl.marketPrice == undefined">Updating...</span>
+        </p>
+        <p>Shares to buy: <input type="number" name="sharesToBuy" ng-model="sharesToBuy" min="1" size="5">
+            <span ng-if="$ctrl.marketPrice != undefined && sharesToBuy > 0">
+                <button type="button" ng-click="$ctrl.buyCallback($ctrl.stockToShow, sharesToBuy, $ctrl.marketPrice)">Buy!</button><br />
+                (Cost: {{ $ctrl.marketPrice * sharesToBuy | currency }})
+            </span>
+        </p>
+    </form>
+</div>
